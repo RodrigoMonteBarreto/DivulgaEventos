@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DivulgaEventos.API.Data;
+using DivulgaEventos.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +28,7 @@ namespace DivulgaEventos.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(context => context.UseSqlite(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<DivulgaEventosContext>(context => context.UseSqlite(Configuration.GetConnectionString("Default")));
             services.AddControllers();
             services.AddCors();
             services.AddSwaggerGen(c =>
@@ -56,7 +56,7 @@ namespace DivulgaEventos.API
             app.UseCors(x => x.AllowAnyHeader()
                              .AllowAnyMethod()
                              .AllowAnyOrigin());
-                             
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

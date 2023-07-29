@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using DivulgaEventos.API.Models;
+using DivulgaEventos.Domain;
 using System.Collections.Generic;
 using System.Linq;
-using DivulgaEventos.API.Data;
+using DivulgaEventos.Persistence;
 using System.Threading.Tasks;
 
 namespace DivulgaEventos.API.Controllers
@@ -12,8 +12,8 @@ namespace DivulgaEventos.API.Controllers
     [Route("api/[controller]")]
     public class EventosController : ControllerBase
     {
-        private readonly DataContext _context;
-        public EventosController(DataContext context)
+        private readonly DivulgaEventosContext _context;
+        public EventosController(DivulgaEventosContext context)
         {
             _context = context;
         }
@@ -27,13 +27,13 @@ namespace DivulgaEventos.API.Controllers
         [HttpGet("{id}")]
         public Evento GetById(int id)
         {
-            return _context.Eventos.SingleOrDefault(x => x.EventoId == id);
+            return _context.Eventos.SingleOrDefault(x => x.Id == id);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] Evento evento)
         {
-            var retorno = _context.Eventos.SingleOrDefault(x => x.EventoId == evento.EventoId);
+            var retorno = _context.Eventos.SingleOrDefault(x => x.Id == evento.Id);
             if (retorno == null)
             {
                 _context.Eventos.Add(evento);
@@ -52,7 +52,7 @@ namespace DivulgaEventos.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var retorno = _context.Eventos.SingleOrDefault(x => x.EventoId == id);
+            var retorno = _context.Eventos.SingleOrDefault(x => x.Id == id);
             if (retorno == null)
             {
                 return BadRequest();

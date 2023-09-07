@@ -1,13 +1,12 @@
 using DivulgaEventos.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace DivulgaEventos.Persistence
+namespace DivulgaEventos.Persistence.Contextos
 {
     public class DivulgaEventosContext : DbContext
     {
         public DivulgaEventosContext(DbContextOptions<DivulgaEventosContext> options) : base(options)
         {
-
         }
 
         public DbSet<Evento> Eventos { get; set; }
@@ -20,6 +19,17 @@ namespace DivulgaEventos.Persistence
         {
             modelBuilder.Entity<PalestranteEvento>()
                 .HasKey(PE => new { PE.EventoId, PE.PalestranteId });
+
+            modelBuilder.Entity<Evento>()
+                .HasMany(e => e.RedesSociais)
+                .WithOne(rs => rs.Evento)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Palestrante>()
+                .HasMany(e => e.RedesSociais)
+                .WithOne(p => p.Palestrante )
+                .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

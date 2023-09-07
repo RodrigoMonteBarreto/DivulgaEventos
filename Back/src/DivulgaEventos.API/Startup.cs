@@ -2,7 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DivulgaEventos.Application;
+using DivulgaEventos.Application.Contratos;
 using DivulgaEventos.Persistence;
+using DivulgaEventos.Persistence.Contextos;
+using DivulgaEventos.Persistence.Contratos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +17,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+
 
 namespace DivulgaEventos.API
 {
@@ -29,7 +35,16 @@ namespace DivulgaEventos.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DivulgaEventosContext>(context => context.UseSqlite(Configuration.GetConnectionString("Default")));
-            services.AddControllers();
+
+             services.AddControllers()                  
+                    .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    );
+
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IGeralPersitence,GeralPersistence >();
+            services.AddScoped<IEventoPersitence, EventoPersistence>();
+
             services.AddCors();
             services.AddSwaggerGen(c =>
             {

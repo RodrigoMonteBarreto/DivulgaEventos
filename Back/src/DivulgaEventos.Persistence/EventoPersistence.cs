@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using DivulgaEventos.Domain;
 using Microsoft.EntityFrameworkCore;
 using DivulgaEventos.Persistence.Contratos;
-
+using DivulgaEventos.Persistence.Contextos;
 
 namespace DivulgaEventos.Persistence
 {
@@ -19,7 +19,7 @@ namespace DivulgaEventos.Persistence
         public async Task<Evento[]> GetAllEventosAsync(bool includePalestrantes = false)
         {
             IQueryable<Evento> query = _context.Eventos
-                                                .Include(x => x.Lote)
+                                                .Include(x => x.Lotes)
                                                 .Include(x => x.RedesSociais);
             if (includePalestrantes)
             {
@@ -28,7 +28,7 @@ namespace DivulgaEventos.Persistence
                         .ThenInclude(x => x.Palestrante);
             }
 
-            query = query.OrderBy(x => x.Id);
+            query = query.AsNoTracking().OrderBy(x => x.Id);
 
             return await query.ToArrayAsync();
 
@@ -37,7 +37,7 @@ namespace DivulgaEventos.Persistence
         public async Task<Evento[]> GetAllEventosByTemaAsync(string tema, bool includePalestrantes = false)
         {
             IQueryable<Evento> query = _context.Eventos
-                                                .Include(x => x.Lote)
+                                                .Include(x => x.Lotes)
                                                 .Include(x => x.RedesSociais);
             if (includePalestrantes)
             {
@@ -46,7 +46,7 @@ namespace DivulgaEventos.Persistence
                         .ThenInclude(x => x.Palestrante);
             }
 
-            query = query.OrderBy(x => x.Id)
+            query = query.AsNoTracking().OrderBy(x => x.Id)
                          .Where(x => x.Tema.ToLower().Contains(tema.ToLower()));
 
             return await query.ToArrayAsync();
@@ -55,7 +55,7 @@ namespace DivulgaEventos.Persistence
         public async Task<Evento> GetEventoByIdAsync(int eventoId, bool includePalestrantes = false)
         {
             IQueryable<Evento> query = _context.Eventos
-                                                .Include(x => x.Lote)
+                                                .Include(x => x.Lotes)
                                                 .Include(x => x.RedesSociais);
             if (includePalestrantes)
             {
@@ -64,7 +64,7 @@ namespace DivulgaEventos.Persistence
                         .ThenInclude(x => x.Palestrante);
             }
 
-            query = query.OrderBy(x => x.Id)
+            query = query.AsNoTracking().OrderBy(x => x.Id)
                          .Where(x => x.Id == eventoId);
 
             return await query.FirstOrDefaultAsync();

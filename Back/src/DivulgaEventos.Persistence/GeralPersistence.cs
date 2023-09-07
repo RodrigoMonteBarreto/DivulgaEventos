@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DivulgaEventos.Domain;
 using Microsoft.EntityFrameworkCore;
 using DivulgaEventos.Persistence.Contratos;
+using DivulgaEventos.Persistence.Contextos;
 
 namespace DivulgaEventos.Persistence
 {
@@ -34,7 +35,7 @@ namespace DivulgaEventos.Persistence
             _context.RemoveRange(entity);
         }
 
-        public async Task<bool> SaveChanges()
+        public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync()) > 0;
         }

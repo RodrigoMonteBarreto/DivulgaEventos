@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DivulgaEventos.Domain;
 using Microsoft.EntityFrameworkCore;
 using DivulgaEventos.Persistence.Contratos;
+using DivulgaEventos.Persistence.Contextos;
 
 namespace DivulgaEventos.Persistence
 {
@@ -27,7 +28,7 @@ namespace DivulgaEventos.Persistence
                         .ThenInclude(x => x.Evento);
             }
 
-            query = query.OrderBy(x => x.Id);
+            query = query.AsNoTracking().OrderBy(x => x.Id);
 
 
             return await query.ToArrayAsync();
@@ -45,9 +46,8 @@ namespace DivulgaEventos.Persistence
                         .ThenInclude(x => x.Evento);
             }
 
-            query = query.OrderBy(x => x.Id)
+            query = query.AsNoTracking().OrderBy(x => x.Id)
                          .Where(x => x.Nome.ToLower().Contains(nome.ToLower()));
-
 
             return await query.ToArrayAsync();
         }
@@ -64,9 +64,8 @@ namespace DivulgaEventos.Persistence
                         .ThenInclude(x => x.Evento);
             }
 
-            query = query.OrderBy(x => x.Id)
+            query = query.AsNoTracking().OrderBy(x => x.Id)
                          .Where(x => x.Id == palestranteId);
-
 
             return await query.FirstOrDefaultAsync();
         }

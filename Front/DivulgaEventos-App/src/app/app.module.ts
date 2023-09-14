@@ -5,8 +5,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 
 import {CollapseModule} from 'ngx-bootstrap/collapse';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import { TooltipModule} from 'ngx-bootstrap/tooltip';
+import { BsDropdownModule} from 'ngx-bootstrap/dropdown';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,11 +32,12 @@ import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+
   ],
   providers: [
     EventoService

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
 
 import {CollapseModule} from 'ngx-bootstrap/collapse';
@@ -10,6 +10,7 @@ import { BsDropdownModule} from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,10 +47,12 @@ import { DateTimeFormatPipePipe } from './helpers/DateTimeFormatPipe.pipe';
       preventDuplicates: true,
       progressBar: true
     }),
+    NgxSpinnerModule
   ],
   providers: [
     EventoService
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { EventoService } from '../services/evento.service';
 import { Evento } from '../models/Evento';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eventos',
@@ -44,9 +45,15 @@ export class EventosComponent implements OnInit {
   constructor(
     private eventoService: EventoService,
     private modalService: BsModalService,
-    private toastr: ToastrService){}
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService){}
 
   public ngOnInit(): void {
+    this.spinner.show();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 5000);
     this.getEventos();
   }
 

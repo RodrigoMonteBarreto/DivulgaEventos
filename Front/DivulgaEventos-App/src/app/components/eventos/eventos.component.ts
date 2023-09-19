@@ -54,7 +54,7 @@ export class EventosComponent implements OnInit {
 
     setTimeout(() => {
       this.spinner.hide();
-    }, 5000);
+    }, 300);
     this.getEventos();
   }
 

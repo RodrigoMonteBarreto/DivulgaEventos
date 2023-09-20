@@ -19,9 +19,8 @@ const routes: Routes = [
       {path: 'registration', component: RegistrationComponent},
     ]
   },
-  {
-    path: 'eventos', redirectTo: 'eventos/lista'
-  },
+  {path: 'user/perfil', component: PerfilComponent},
+  {path: 'eventos', redirectTo: 'eventos/lista'},
   {
     path: 'eventos', component: EventosComponent,
     children: [
@@ -32,7 +31,6 @@ const routes: Routes = [
   },
   {path: 'dashboard', component: DashboardComponent},
   {path: 'palestrantes', component: PalestrantesComponent},
-  {path: 'perfil', component: PerfilComponent},
   {path: 'contatos', component: ContatosComponent},
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   {path: '**', redirectTo: 'dashboard', pathMatch: 'full'},

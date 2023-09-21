@@ -8,7 +8,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class EventoDetalheComponent implements OnInit {
 
-  form!: FormGroup;
+  public form!: FormGroup;
 
   get f(): any{
     return this.form.controls;
@@ -29,5 +29,9 @@ export class EventoDetalheComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telefone: ['', Validators.required],
       })
+  }
+
+  resetForm(): void {
+    this.form.reset();
   }
 }

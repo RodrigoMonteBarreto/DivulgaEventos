@@ -18,7 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
-
+using AutoMapper;
 
 namespace DivulgaEventos.API
 {
@@ -41,6 +41,7 @@ namespace DivulgaEventos.API
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IGeralPersitence,GeralPersistence >();
             services.AddScoped<IEventoPersitence, EventoPersistence>();

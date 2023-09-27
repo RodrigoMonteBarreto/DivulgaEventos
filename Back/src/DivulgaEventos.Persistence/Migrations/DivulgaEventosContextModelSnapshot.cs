@@ -3,6 +3,7 @@ using System;
 using DivulgaEventos.Persistence.Contextos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DivulgaEventos.Persistence.Migrations
 {
@@ -33,12 +34,9 @@ namespace DivulgaEventos.Persistence.Migrations
                     b.Property<string>("Local")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Lote")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("QtdPessoas")
                         .HasColumnType("INTEGER");
-
+                    
                     b.Property<string>("Tema")
                         .HasColumnType("TEXT");
 
@@ -180,11 +178,13 @@ namespace DivulgaEventos.Persistence.Migrations
                 {
                     b.HasOne("DivulgaEventos.Domain.Evento", "Evento")
                         .WithMany("RedesSociais")
-                        .HasForeignKey("EventoId");
+                        .HasForeignKey("EventoId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DivulgaEventos.Domain.Palestrante", "Palestrante")
                         .WithMany("RedesSociais")
-                        .HasForeignKey("PalestranteId");
+                        .HasForeignKey("PalestranteId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Evento");
 

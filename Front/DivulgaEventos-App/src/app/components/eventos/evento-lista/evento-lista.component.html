@@ -50,7 +50,7 @@
         <td class="d-none d-md-table-cell">
           <img [collapse]="!showImg"
           [isAnimated]="true"
-          src="../../../../assets/{{evento.imagemURL}}.png"
+          src="../../../../assets/{{evento.imagemURL}}"
           [style.width.px]="widthImg"
           [style.margin.px]="marginImg"
           >
@@ -61,9 +61,9 @@
         <td class="d-none d-md-table-cell">{{evento.local}}</td>
         <td>{{evento.dataEvento | DateTimeFormatPipe}}</td>
         <td class="d-none d-md-table-cell">{{evento.qtdPessoas}}</td>
-        <td class="d-none d-md-table-cell">{{evento.lotes[0].nome}}</td>
+        <td class="d-none d-md-table-cell">{{evento.lotes[0]?.nome}}</td>
         <td>
-          <button type="button" class="btn btn-danger btn-sm" tooltip="Excluir" (click)="openModal(template)">
+          <button type="button" class="btn btn-danger btn-sm" tooltip="Excluir" (click)="openModal($event,template, evento.id)">
             <i class="fa fa-trash"></i>
             Excluir
           </button>
@@ -84,7 +84,7 @@
 
 <ng-template #template>
   <div class="modal-body text-center">
-    <p>Tem certeza que quer deletar este Evento?</p>
+    <p>Tem certeza que quer deletar o Evento de código {{this.eventoId}} ?</p>
     <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
     <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
   </div>

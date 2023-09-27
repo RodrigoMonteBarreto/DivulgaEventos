@@ -43,7 +43,7 @@ namespace DivulgaEventos.API
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IEventoService, EventoService>();
-            services.AddScoped<IGeralPersitence,GeralPersistence >();
+            services.AddScoped<IGeralPersitence, GeralPersistence>();
             services.AddScoped<IEventoPersitence, EventoPersistence>();
 
             services.AddCors();

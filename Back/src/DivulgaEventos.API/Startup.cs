@@ -36,15 +36,19 @@ namespace DivulgaEventos.API
         {
             services.AddDbContext<DivulgaEventosContext>(context => context.UseSqlite(Configuration.GetConnectionString("Default")));
 
-             services.AddControllers()                  
-                    .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
-                        Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                    );
+            services.AddControllers()
+                   .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
+                       Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                   );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<ILoteService, LoteService>();
+
             services.AddScoped<IGeralPersitence, GeralPersistence>();
             services.AddScoped<IEventoPersitence, EventoPersistence>();
+            services.AddScoped<ILotePersitence, LotePersistence>();
 
             services.AddCors();
             services.AddSwaggerGen(c =>

@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Evento } from 'src/app/models/Evento';
 import { EventoService } from 'src/app/services/evento.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-evento-lista',
@@ -22,6 +23,9 @@ export class EventoListaComponent implements OnInit {
   public  marginImg: number = 2;
   public showImg: boolean = true;
   private _filtroLista: string = '';
+  public larguraImagem = 150;
+  public margemImagem = 2;
+  public exibirImagem = true;
 
 
   public get filtroLista() : string
@@ -59,6 +63,16 @@ export class EventoListaComponent implements OnInit {
     this.carregarEventos();
   }
 
+  public mostraImagem(imagemURL: string): string {
+    return (imagemURL !== '')
+      ? `${environment.apiURL}resources/images/${imagemURL}`
+      : 'assets/img/semImagem.jpeg';
+  }
+
+  public alterarImagem(): void {
+    this.exibirImagem = !this.exibirImagem;
+  }
+
   public alterarImg()
   {
     this.showImg = !this.showImg;
@@ -86,19 +100,27 @@ export class EventoListaComponent implements OnInit {
     this.modalRef!.hide();
     this.spinner.show();
 
-    this.eventoService.deleteEvento(this.eventoId).subscribe(
-      (result: any) => {
-        if (result.message === 'Deletado') {
-          this.toastr.success('O Evento foi deletado com Sucesso.', 'Deletado!');
-          this.carregarEventos();
+    this.eventoService
+      .deleteEvento(this.eventoId)
+      .subscribe(
+        (result: any) => {
+          if (result.message === 'Deletado') {
+            this.toastr.success(
+              'O Evento foi deletado com Sucesso.',
+              'Deletado!'
+            );
+            this.carregarEventos();
+          }
+        },
+        (error: any) => {
+          console.error(error);
+          this.toastr.error(
+            `Erro ao tentar deletar o evento ${this.eventoId}`,
+            'Erro'
+          );
         }
-      },
-      (error: any) => {
-        console.error(error);
-        this.toastr.error(`Erro ao tentar deletar o evento ${this.eventoId}`, 'Erro');
-      }
-    ).add(() => this.spinner.hide());
-
+      )
+      .add(() => this.spinner.hide());
   }
 
   decline(): void {

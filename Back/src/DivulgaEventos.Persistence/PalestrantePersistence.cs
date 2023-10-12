@@ -46,8 +46,8 @@ namespace DivulgaEventos.Persistence
                         .ThenInclude(x => x.Evento);
             }
 
-            query = query.AsNoTracking().OrderBy(x => x.Id)
-                         .Where(x => x.Nome.ToLower().Contains(nome.ToLower()));
+            query = query.AsNoTracking().OrderBy(p => p.Id)
+                         .Where(p => p.User.PrimeiroNome.ToLower().Contains(nome.ToLower()));
 
             return await query.ToArrayAsync();
         }

@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DivulgaEventos.Domain;
 using Microsoft.EntityFrameworkCore;
+using DivulgaEventos.Domain.Identity;
 
 namespace DivulgaEventos.Persistence.Contextos
 {
-    public class DivulgaEventosContext : DbContext
+    public class DivulgaEventosContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
+                                                       IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DivulgaEventosContext(DbContextOptions<DivulgaEventosContext> options) : base(options)
         {
@@ -17,6 +21,22 @@ namespace DivulgaEventos.Persistence.Contextos
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserRole>(userRole => 
+                {
+                    userRole.HasKey(ur => new { ur.UserId, ur.RoleId});
+                    userRole.HasOne(ur => ur.Role)
+                        .WithMany(r => r.UserRoles)
+                        .HasForeignKey(ur => ur.RoleId)
+                        .IsRequired();
+                    userRole.HasOne(ur => ur.User)
+                        .WithMany(r => r.UserRoles)
+                        .HasForeignKey(ur => ur.UserId)
+                        .IsRequired();
+                }
+            );
+            
             modelBuilder.Entity<PalestranteEvento>()
                 .HasKey(PE => new { PE.EventoId, PE.PalestranteId });
 
@@ -27,7 +47,7 @@ namespace DivulgaEventos.Persistence.Contextos
 
             modelBuilder.Entity<Palestrante>()
                 .HasMany(e => e.RedesSociais)
-                .WithOne(p => p.Palestrante )
+                .WithOne(p => p.Palestrante)
                 .OnDelete(DeleteBehavior.Cascade);
 
         }

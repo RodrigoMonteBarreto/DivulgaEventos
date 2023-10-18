@@ -5,6 +5,7 @@ using DivulgaEventos.Application.Contratos;
 using DivulgaEventos.Application.Dtos;
 using DivulgaEventos.Domain;
 using DivulgaEventos.Persistence.Contratos;
+using DivulgaEventos.Persistence.Models;
 
 namespace DivulgaEventos.Application
 {
@@ -54,7 +55,7 @@ namespace DivulgaEventos.Application
 
                 model.Id = evento.Id;
                 model.UserId = userId;
-                
+
                 _mapper.Map(model, evento);
 
                 _geralPersistence.Update<Evento>(evento);
@@ -89,31 +90,21 @@ namespace DivulgaEventos.Application
             }
         }
 
-        public async Task<EventoDto[]> GetAllEventosAsync(int userId, bool includePalestrantes = false)
+        public async Task<PageList<EventoDto>> GetAllEventosAsync(int userId, PageParams pageParams, bool includePalestrantes = false)
         {
             try
             {
-                var eventos = await _eventoPersitence.GetAllEventosAsync(userId, includePalestrantes);
+                var eventos = await _eventoPersitence.GetAllEventosAsync(userId, pageParams, includePalestrantes);
                 if (eventos == null) return null;
 
-                var retorno = _mapper.Map<EventoDto[]>(eventos);
-                return retorno;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
+                var resultado = _mapper.Map<PageList<EventoDto>>(eventos);
+                
+                resultado.CurrentPage = eventos.CurrentPage;
+                resultado.TotalPages = eventos.TotalPages;
+                resultado.PageSize = eventos.PageSize;
+                resultado.TotalCount = eventos.TotalCount;
 
-        public async Task<EventoDto[]> GetAllEventosByTemaAsync(int userId, string tema, bool includePalestrantes = false)
-        {
-            try
-            {
-                var eventos = await _eventoPersitence.GetAllEventosByTemaAsync(userId, tema, includePalestrantes);
-                if (eventos == null) return null;
-
-                var retorno = _mapper.Map<EventoDto[]>(eventos);
-                return retorno;
+                return resultado;
             }
             catch (Exception ex)
             {

@@ -39,6 +39,7 @@ import { AccountService } from './services/AccountService.service';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { HomeComponent } from './components/home/home.component';
 
+
 defineLocale('pt-br', ptBrLocale);
 
 
@@ -76,7 +77,9 @@ defineLocale('pt-br', ptBrLocale);
       timeOut: 4000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-      progressBar: true
+      progressBar: true,
+
+
     }),
     NgxSpinnerModule,
 

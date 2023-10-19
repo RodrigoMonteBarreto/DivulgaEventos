@@ -17,8 +17,7 @@ import { EventoService } from '@app/services/evento.service';
 import { Evento } from '@app/models/Evento';
 import { Lote } from '@app/models/Lote';
 import { DatePipe } from '@angular/common';
-import { environment } from 'src/environments/environment';
-
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-evento-detalhe',
@@ -27,14 +26,14 @@ import { environment } from 'src/environments/environment';
   providers: [DatePipe],
 })
 export class EventoDetalheComponent implements OnInit {
-  modalRef!: BsModalRef;
-  eventoId!: number;
+  modalRef: BsModalRef;
+  eventoId: number;
   evento = {} as Evento;
-  form!: FormGroup;
+  form: FormGroup;
   estadoSalvar = 'post';
   loteAtual = { id: 0, nome: '', indice: 0 };
-  imagemURL = 'assets/upload.png';
-  file!: File;
+  imagemURL = 'assets/img/upload.png';
+  file: File;
 
   get modoEditar(): boolean {
     return this.estadoSalvar === 'put';
@@ -73,7 +72,7 @@ export class EventoDetalheComponent implements OnInit {
   }
 
   public carregarEvento(): void {
-    this.eventoId = +this.activatedRouter.snapshot.paramMap.get('id')!;
+    this.eventoId = +this.activatedRouter.snapshot.paramMap.get('id');
 
     if (this.eventoId !== null && this.eventoId !== 0) {
       this.spinner.show();
@@ -215,8 +214,8 @@ export class EventoDetalheComponent implements OnInit {
   }
 
   public removerLote(template: TemplateRef<any>, indice: number): void {
-    this.loteAtual.id = this.lotes.get(indice + '.id')?.value;
-    this.loteAtual.nome = this.lotes.get(indice + '.nome')?.value;
+    this.loteAtual.id = this.lotes.get(indice + '.id').value;
+    this.loteAtual.nome = this.lotes.get(indice + '.nome').value;
     this.loteAtual.indice = indice;
 
     this.modalRef = this.modalService.show(template, { class: 'modal-sm' });

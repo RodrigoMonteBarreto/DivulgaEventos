@@ -39,7 +39,7 @@ export class EventoListaComponent implements OnInit {
     this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos;
   }
 
-  public filtrarEventos(filtrarPor : string) : Evento {
+  public filtrarEventos(filtrarPor : any) : Evento {
     filtrarPor = filtrarPor.toLocaleLowerCase();
 
     return this.eventos.filter(

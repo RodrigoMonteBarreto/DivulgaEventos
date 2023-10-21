@@ -29,6 +29,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Collections.Generic;
+using DivulgaEventos.API.Helpers;
 
 namespace DivulgaEventos.API
 {
@@ -87,10 +88,16 @@ namespace DivulgaEventos.API
             services.AddScoped<ILoteService, LoteService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IPalestranteService, PalestranteService>();
+            services.AddScoped<IRedeSocialService, RedeSocialService>();
+            services.AddScoped<IUtil, Util>();
 
             services.AddScoped<IGeralPersitence, GeralPersistence>();
             services.AddScoped<IEventoPersitence, EventoPersistence>();
             services.AddScoped<ILotePersitence, LotePersistence>();
+            services.AddScoped<IUserPersist, UserPersist>();
+            services.AddScoped<IPalestrantePersist, PalestrantePersistence>();
+            services.AddScoped<IRedeSocialPersist, RedeSocialPersist>();
             
             services.AddScoped<IUserPersist, UserPersist>();
 

@@ -8,7 +8,12 @@ import { Constants } from '../util/constants';
 export class DateTimeFormatPipePipe extends DatePipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    return super.transform(value, Constants.DATE_TIME_FMT);
+
+    const date = new Date(value);
+
+// Agora você pode usar o pipe DatePipe com o objeto de data
+
+    return super.transform(date, Constants.DATE_TIME_FMT);
   }
 
 

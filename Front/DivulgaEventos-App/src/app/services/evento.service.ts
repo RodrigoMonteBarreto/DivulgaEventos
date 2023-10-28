@@ -1,16 +1,15 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Evento } from './../models/Evento';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Evento } from '../models/Evento';
-import { map, take } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { take, map } from 'rxjs/operators';
+import { environment } from '@environments/environment';
 import { PaginatedResult } from '@app/models/Pagination';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable(
+// { providedIn: 'root'}
+)
 export class EventoService {
-
   baseURL = environment.apiURL + 'api/eventos';
 
   constructor(private http: HttpClient) { }
@@ -41,27 +40,28 @@ export class EventoService {
         }));
   }
 
-
   public getEventoById(id: number): Observable<Evento> {
     return this.http
-    .get<Evento>(`${this.baseURL}/${id}`)
-    .pipe(take(1));
+      .get<Evento>(`${this.baseURL}/${id}`)
+      .pipe(take(1));
   }
 
   public post(evento: Evento): Observable<Evento> {
     return this.http
-    .post<Evento>(this.baseURL, evento);
+      .post<Evento>(this.baseURL, evento)
+      .pipe(take(1));
   }
 
   public put(evento: Evento): Observable<Evento> {
     return this.http
-    .put<Evento>(`${this.baseURL}/${evento.id}`, evento);
+      .put<Evento>(`${this.baseURL}/${evento.id}`, evento)
+      .pipe(take(1));
   }
 
   public deleteEvento(id: number): Observable<any> {
     return this.http
-    .delete(`${this.baseURL}/${id}`)
-    .pipe(take(1));
+      .delete(`${this.baseURL}/${id}`)
+      .pipe(take(1));
   }
 
   postUpload(eventoId: number, file: File): Observable<Evento> {

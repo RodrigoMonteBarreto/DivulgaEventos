@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { UserLogin } from '../../../models/identity/UserLogin';
-import { AccountService } from '../../../services/AccountService.service';
+import { AccountService } from '../../../services/account.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   model = {} as UserLogin;
 
   constructor(

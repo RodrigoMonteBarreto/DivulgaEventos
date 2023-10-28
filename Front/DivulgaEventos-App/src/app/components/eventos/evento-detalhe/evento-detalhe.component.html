@@ -31,7 +31,7 @@
             <div class="form-group col-md-4">
               <label>Data e Hora</label>
               <input type="datetime" class="form-control" [ngClass]="cssValidator(f.dataEvento)"
-              value="{{evento.dataEvento | DateTimeFormatPipe}}" bsDatepicker [bsConfig]="bsConfig" formControlName="dataEvento"
+              value="{{evento.dataEvento | DateFormatPipe}}" bsDatepicker [bsConfig]="bsConfig" formControlName="dataEvento"
               placeholder="" [(ngModel)]="evento.dataEvento">
               <div *ngIf="f.dataEvento.errors?.required && f.dataEvento.touched" class="invalid-feedback">
                 Data e Hora é obrigatório.
@@ -206,7 +206,7 @@
         <p class="card-text">
           <b>Local:</b> {{evento.local}}
           <br>
-          <b>Data:</b> {{evento.dataEvento | DateTimeFormatPipe}}
+          <b>Data:</b> {{evento.dataEvento | DateFormatPipe}}
         </p>
         <hr>
         <p class="card-text">
